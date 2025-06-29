@@ -12,46 +12,28 @@
 
 Программа:
 ```python
-MOD = 10**6 + 3  # хорошее простое число для размера таблицы
+MOD = 10**6 + 5
 
 class HashSet:
     def __init__(self):
         self.table = [[] for _ in range(MOD)]
 
-    def _hash(self, x):
-        # Можно просто: return x % MOD, но добавим стабилизацию
-        x = (x ^ (x >> 16)) % MOD
-        return x
+    def hash(self, x):
+        return x  % MOD
 
     def add(self, x):
-        h = self._hash(x)
+        h = self.hash(x)
         if x not in self.table[h]:
             self.table[h].append(x)
 
     def delete(self, x):
-        h = self._hash(x)
+        h = self.hash(x)
         if x in self.table[h]:
             self.table[h].remove(x)
 
     def exists(self, x):
-        h = self._hash(x)
+        h = self.hash(x)
         return x in self.table[h]
-
-def main():
-    hs = HashSet()
-
-    with open("input.txt") as file:
-        n = int(file.readline())
-        for _ in range(n):
-            cmd, val = file.readline().strip().split()
-            x = int(val)
-
-            if cmd == 'A':
-                hs.add(x)
-            elif cmd == 'D':
-                hs.delete(x)
-            elif cmd == '?':
-                print('Y' if hs.exists(x) else 'N')
 ```
 
 ## Задание 3 - Хеширование с цепочками
